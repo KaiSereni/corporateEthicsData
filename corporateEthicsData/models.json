@@ -1,0 +1,30 @@
+[
+    {
+        "id":  "google/gemini-3-flash-preview",
+        "common_name": "Google Gemini"
+    },
+    {
+        "id": "~deepseek/deepseek-flash-latest",
+        "common_name": "DeepSeek"
+    },
+    {
+        "id": "anthropic/claude-3-haiku",
+        "common_name": "Claude"
+    },
+    {
+        "id": "openai/gpt-5.6-luna",
+        "common_name": "ChatGPT"
+    },
+    {
+        "id": "meta-llama/llama-4-scout",
+        "common_name": "Meta Llama"
+    },
+    {
+        "id": "microsoft/wizardlm-2-8x22b",
+        "common_name": "WizardLM"
+    },
+    {
+        "id": "qwen/qwen3.8-flash",
+        "common_name": "Qwen"
+    }
+]

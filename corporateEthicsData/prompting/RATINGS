@@ -1,0 +1,11 @@
+Your goal is to rate {common} Corporation's ethics and integrity in a series of different categories based on the following report. You will provide a rating from 1 to 100 for at least 3 of the provided metrics. The metrics are as follows:
+
+{metrics}
+
+The following is the ethics report off of which you are to base your ratings.
+
+```
+{report}
+```
+
+Again: rate {corporate} in as many categories as possible given the report provided.
