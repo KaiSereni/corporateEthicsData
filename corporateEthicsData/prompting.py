@@ -1,7 +1,7 @@
 from pathlib import Path
 from importlib.resources import files
 
-BASE_DIR = Path(files("corporateEthicsData").name)
+BASE_DIR = Path(__file__).parent
 PROMPTING_DIR = BASE_DIR / "prompting"
 
 
