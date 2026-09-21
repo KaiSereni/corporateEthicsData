@@ -5,17 +5,16 @@ BASE_DIR = Path(__file__).parent
 PROMPTING_DIR = BASE_DIR / "prompting"
 
 
-def get_metric_dirs(prompting_dir: Path | str = PROMPTING_DIR) -> list[Path]:
+def _get_metric_dirs(prompting_dir: Path | str = PROMPTING_DIR) -> list[Path]:
     p_dir = Path(prompting_dir)
     return sorted([p for p in p_dir.iterdir() if p.is_dir()])
 
-
 def get_metric_names(prompting_dir: Path | str = PROMPTING_DIR) -> list[str]:
-    return [p.name for p in get_metric_dirs(prompting_dir)]
+    return [p.name for p in _get_metric_dirs(prompting_dir)]
 
 def generate_research_prompt(common: str, corporate: str) -> str:
     metric_descriptions_and_red_flags = []
-    for dir in get_metric_dirs():
+    for dir in _get_metric_dirs():
         with open(dir / "description", 'r') as f:
             this_description = f.read()
         with open(dir / "red_flags", 'r') as f:
@@ -30,7 +29,7 @@ def generate_research_prompt(common: str, corporate: str) -> str:
 
 def generate_ratings_prompt(common: str, corporate: str, report: str) -> str:
     metric_rating_descriptions = []
-    for dir in get_metric_dirs():
+    for dir in _get_metric_dirs():
         with open(dir / "description", 'r') as f:
             this_description = f.read()
         with open(dir / "rating") as f:
