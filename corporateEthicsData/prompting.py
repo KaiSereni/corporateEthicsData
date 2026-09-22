@@ -1,5 +1,4 @@
 from pathlib import Path
-from importlib.resources import files
 
 BASE_DIR = Path(__file__).parent
 PROMPTING_DIR = BASE_DIR / "prompting"
@@ -7,7 +6,10 @@ PROMPTING_DIR = BASE_DIR / "prompting"
 
 def _get_metric_dirs(prompting_dir: Path | str = PROMPTING_DIR) -> list[Path]:
     p_dir = Path(prompting_dir)
-    return sorted([p for p in p_dir.iterdir() if p.is_dir()])
+    return sorted([
+        p for p in p_dir.iterdir()
+        if p.is_dir() and not p.name.startswith(('.', '_')) and (p / "description").is_file()
+    ])
 
 def get_metric_names(prompting_dir: Path | str = PROMPTING_DIR) -> list[str]:
     return [p.name for p in _get_metric_dirs(prompting_dir)]
@@ -15,12 +17,12 @@ def get_metric_names(prompting_dir: Path | str = PROMPTING_DIR) -> list[str]:
 def generate_research_prompt(common: str, corporate: str) -> str:
     metric_descriptions_and_red_flags = []
     for dir in _get_metric_dirs():
-        with open(dir / "description", 'r') as f:
+        with open(dir / "description", 'r', encoding="utf-8") as f:
             this_description = f.read()
-        with open(dir / "red_flags", 'r') as f:
+        with open(dir / "red_flags", 'r', encoding="utf-8") as f:
             this_red_flags = f.read()
         metric_descriptions_and_red_flags.append(this_description + '\n' + this_red_flags)
-    with open(PROMPTING_DIR / "RESEARCH", 'r') as f:
+    with open(PROMPTING_DIR / "RESEARCH", 'r', encoding="utf-8") as f:
         return f.read().format(
             common=common,
             corporate=corporate,
@@ -30,12 +32,12 @@ def generate_research_prompt(common: str, corporate: str) -> str:
 def generate_ratings_prompt(common: str, corporate: str, report: str) -> str:
     metric_rating_descriptions = []
     for dir in _get_metric_dirs():
-        with open(dir / "description", 'r') as f:
+        with open(dir / "description", 'r', encoding="utf-8") as f:
             this_description = f.read()
-        with open(dir / "rating") as f:
+        with open(dir / "rating", 'r', encoding="utf-8") as f:
             this_rating_directions = f.read()
         metric_rating_descriptions.append(this_description + '\n' + this_rating_directions)
-    with open(PROMPTING_DIR / "RATINGS", 'r') as f:
+    with open(PROMPTING_DIR / "RATINGS", 'r', encoding="utf-8") as f:
         return f.read().format(
             common=common,
             corporate=corporate,

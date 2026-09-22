@@ -9,16 +9,16 @@ _TEST_CORPORATE = "Honeywell International Inc"
 
 Models = list[dict[Literal["id", "common_name"], str]]
 
-with open(BASE_DIR / 'models.json', 'r') as f:
+with open(BASE_DIR / 'models.json', 'r', encoding="utf-8") as f:
     MODELS: Models = json.load(f)
 
 Ratings = list[dict[Literal['metric', 'rating'], str | int]]
 
-def get_report_and_ratings(common: str, corporate: str, model: str = "google/gemini-3.8-flash") -> tuple[str, Ratings]:
+def get_report_and_ratings(common: str, corporate: str, model: str) -> tuple[str, Ratings]:
     report = research_call(generate_research_prompt(common, corporate), None, model=model)
     return report, structured_call(generate_ratings_prompt(common, corporate, report), None, get_metric_names(), model=model)["ratings"]
 
-def _test_report_and_ratings(common: str, corporate: str, model: str = "google/gemini-3.8-flash") -> tuple[str, Ratings]:
+def _test_report_and_ratings(common: str, corporate: str, model: str) -> tuple[str, Ratings]:
     return (
         f"# Ethics Report for {common} aka {corporate} using {model}:\n\nThey baaaad\n", 
         [

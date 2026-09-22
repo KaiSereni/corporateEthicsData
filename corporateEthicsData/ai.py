@@ -5,7 +5,7 @@ from openrouter import OpenRouter
 
 dotenv.load_dotenv()
 if not os.getenv("OPENROUTER_KEY"):
-    raise RuntimeWarning("You need to define an OpenRouter API key in ./env (with the key \"OPENROUTER_KEY\")")
+    print("You need to define an OpenRouter API key in ./env (with the key \"OPENROUTER_KEY\")")
 
 def research_call(prompt: str, system: str | None, model: str) -> str:
     messages = []
@@ -64,6 +64,8 @@ def structured_call(prompt: str, system: str | None, metric_categories: list[str
                                 },
                                 "rating": {
                                     "type": "integer",
+                                    "minimum": 1,
+                                    "maximum": 100
                                 },
                             },
                             "required": [
